@@ -3,3 +3,5 @@ amathema - LaTeX equations as PNG
 GET /m/#{encoded equation}.png where equation is a Base64 for URL (+ to -, / to _) encoded  LaTeX equation (e.g. [equation].pack('m').tr('+/','-_').strip)
 
 Some configuration at the top of amathema.rb, self explanatory.
+
+Default is listening on port 2804, localhost only.
