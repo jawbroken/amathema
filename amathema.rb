@@ -28,7 +28,7 @@ helpers do
   end
   
   def valid_equation?(equation)
-    equation =~ /^[A-Za-z0-9\-\_]+$/
+    equation =~ /^[A-Za-z0-9\-\_=]+$/
   end
   
   def construct_LaTeX_document(dequation)
