@@ -1,0 +1,3 @@
+amathema - LaTeX equations as PNG
+=================================
+GET /m/#{encoded equation}.png where equation is a Base64 for URL (+ to -, / to _) encoded  LaTeX equation (e.g. [equation].pack('m').tr('+/','-_').strip)
