@@ -8,8 +8,14 @@ require 'rubygems'
 require 'sinatra'
 require 'markaby'
 
+# Configuration
 CACHE_DIR = "./cache/"
 PIXEL_HEIGHT = 30
+set :host, 'localhost'
+set :port, 2804
+
+set :environment, :production
+enable :lock
 
 # create cache directory on startup
 configure do
