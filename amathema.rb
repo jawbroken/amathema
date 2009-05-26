@@ -7,6 +7,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'markaby'
+require 'digest/md5'
 
 # Configuration
 CACHE_DIR = "./cache/"
@@ -40,15 +41,16 @@ end
 get '/m/*.png' do
   equation = params[:splat][0]
   if valid_equation? equation
-    png_file = File.join(CACHE_DIR, "#{equation}.png")
+    digest = Digest::MD5.hexdigest(equation)
+    png_file = File.join(CACHE_DIR, "#{digest}.png")
     # not in cache?
     unless File.exists? png_file
       dequation = decode_equation(equation)
-      tex_file = File.join(CACHE_DIR, "#{equation}.tex")
+      tex_file = File.join(CACHE_DIR, "#{digest}.tex")
       File.open(tex_file, "w"){|f| f.write(construct_LaTeX_document(dequation))}
       %x{latex -halt-on-error #{tex_file}}
-      %x{dvipng -T tight -D #{PIXEL_HEIGHT*7.227} #{equation}.dvi -o #{png_file}}
-      File.delete("#{equation}.aux", "#{equation}.dvi", "#{equation}.log")
+      %x{dvipng -T tight -D #{PIXEL_HEIGHT*7.227} #{digest}.dvi -o #{png_file}}
+      File.delete("#{digest}.aux", "#{digest}.dvi", "#{digest}.log")
     end
     send_file(png_file)
   else
