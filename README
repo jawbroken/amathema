@@ -5,3 +5,5 @@ GET /m/#{encoded equation}.png where equation is a Base64 for URL (+ to -, / to 
 Some configuration at the top of amathema.rb, self explanatory.
 
 Default is listening on port 2804, localhost only.
+
+Only expose this to untrusted input if you trust your latex setup (in particular check the shell_execute and input/ouput file options of your tex distribution).
