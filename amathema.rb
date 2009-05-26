@@ -50,7 +50,13 @@ get '/m/*.png' do
       File.open(tex_file, "w"){|f| f.write(construct_LaTeX_document(dequation))}
       %x{latex -halt-on-error #{tex_file}}
       %x{dvipng -T tight -D #{PIXEL_HEIGHT*7.227} #{digest}.dvi -o #{png_file}}
-      File.delete("#{digest}.aux", "#{digest}.dvi", "#{digest}.log")
+      begin
+        File.delete("#{digest}.log")
+        File.delete("#{digest}.aux")
+        File.delete("#{digest}.dvi")
+      rescue Exception => e
+        raise Sinatra::NotFound
+      end
     end
     send_file(png_file)
   else
