@@ -46,7 +46,7 @@ get '/m/*.png' do
       dequation = decode_equation(equation)
       tex_file = File.join(CACHE_DIR, "#{equation}.tex")
       File.open(tex_file, "w"){|f| f.write(construct_LaTeX_document(dequation))}
-      %x{latex #{tex_file}}
+      %x{latex -halt-on-error #{tex_file}}
       %x{dvipng -T tight -D #{PIXEL_HEIGHT*7.227} #{equation}.dvi -o #{png_file}}
       File.delete("#{equation}.aux", "#{equation}.dvi", "#{equation}.log")
     end
